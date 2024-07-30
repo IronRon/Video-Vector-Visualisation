@@ -3,6 +3,7 @@ import mediapipe as mp
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from mpl_toolkits.mplot3d import Axes3D
 
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 600)
@@ -91,23 +92,32 @@ if hand_centers_length > 1:
     plt.tight_layout()
     plt.show()
 
+    plt.ion()
+
     # Calculate vectors
     vectors = np.diff(hand_centers, axis=0)
 
-    fig, ax = plt.subplots()
-    ax.set_xlim(-50, 50)
-    ax.set_ylim(-50, 50)
-    ax.axhline(0, color='yellow', lw=1)
-    ax.axvline(0, color='yellow', lw=1)
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.set_xlim(-10, 10)
+    ax.set_ylim(-10, 10)
+    ax.set_zlim(-10, 10)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
 
-    quiver = ax.quiver(0, 0, velocities[0, 0], velocities[0, 1], color='r', angles='xy', scale_units='xy', scale=1)
+    quiver = None
 
     def update(frame):
-        #quiver.set_offsets([hand_centers[frame, 0], hand_centers[frame, 1]])
-        quiver.set_UVC(velocities[frame, 0], velocities[frame, 1])
+        global quiver
+        if quiver:
+            quiver.remove()  # Remove the existing quiver object
+        quiver = ax.quiver(0, 0, 0, velocities[frame, 0], velocities[frame, 1], velocities[frame, 2], color='r', length=1, normalize=True)
+        #print(f"Updated Frame {frame}: {velocities[frame, 0]}, {velocities[frame, 1]}, {velocities[frame, 2]}")
+        plt.pause(.001) # added pause made the vectors visible
         return quiver,
 
     # Creating animation
-    ani = FuncAnimation(fig, update, frames=hand_centers_length - 1, interval=50, blit=True)
+    ani = FuncAnimation(fig, update, frames=len(vectors), interval=100, blit=True)
 
     plt.show()

@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 600)
@@ -42,8 +43,8 @@ while True:
 
             cv2.circle(frame, (int(center_x), int(center_y)), 5, (0, 255, 0), -1)
 
-            coord_text = f"X: {center_x:.2f}, Y: {center_y:.2f}, Z: {center_z:.2f}"
-            cv2.putText(frame, coord_text, (int(center_x), int(center_y) - 10),
+            coord_text = f"X: {center_x:.2f}, Y: {center_y:.2f}, Z: {center_z:.4f}"
+            cv2.putText(frame, coord_text, (int(center_x) - 20, int(center_y) - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1, cv2.LINE_AA)
 
 
@@ -88,4 +89,25 @@ if hand_centers_length > 1:
     plt.title('Hand Acceleration over Time')
 
     plt.tight_layout()
+    plt.show()
+
+    # Calculate vectors
+    vectors = np.diff(hand_centers, axis=0)
+
+    fig, ax = plt.subplots()
+    ax.set_xlim(-50, 50)
+    ax.set_ylim(-50, 50)
+    ax.axhline(0, color='yellow', lw=1)
+    ax.axvline(0, color='yellow', lw=1)
+
+    quiver = ax.quiver(0, 0, velocities[0, 0], velocities[0, 1], color='r', angles='xy', scale_units='xy', scale=1)
+
+    def update(frame):
+        #quiver.set_offsets([hand_centers[frame, 0], hand_centers[frame, 1]])
+        quiver.set_UVC(velocities[frame, 0], velocities[frame, 1])
+        return quiver,
+
+    # Creating animation
+    ani = FuncAnimation(fig, update, frames=hand_centers_length - 1, interval=50, blit=True)
+
     plt.show()

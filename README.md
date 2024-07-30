@@ -3,6 +3,10 @@
 ## Overview
 
 This project captures hand movements using a webcam and performs motion analysis by tracking the hand's position, velocity, and acceleration over time. The project uses OpenCV for video capture, MediaPipe for hand landmark detection, and NumPy and Matplotlib for data analysis and visualization.
+![Figure_2](https://github.com/user-attachments/assets/ec4601ac-6ebc-4a5b-baa7-22aa2bd16cc1)
+![Figure_3](https://github.com/user-attachments/assets/a018bed7-61e2-4f11-be0b-5f413aebaedd)
+
+
 
 ## Requirements
 

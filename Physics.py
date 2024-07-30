@@ -92,16 +92,14 @@ if hand_centers_length > 1:
     plt.tight_layout()
     plt.show()
 
-    plt.ion()
-
     # Calculate vectors
     vectors = np.diff(hand_centers, axis=0)
 
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    ax.set_xlim(-10, 10)
-    ax.set_ylim(-10, 10)
-    ax.set_zlim(-10, 10)
+    ax.set_xlim(-5, 5)
+    ax.set_ylim(-5, 5)
+    ax.set_zlim(-5, 5)
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')

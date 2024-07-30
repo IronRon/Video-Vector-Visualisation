@@ -49,17 +49,21 @@ pip install opencv-python mediapipe numpy matplotlib
 
 - Matplotlib is used to plot the hand's position, velocity, and acceleration over time in three separate subplots.
 
+**Real-time Vector Visualization**
+
+- Real-time visualization of velocity vectors has been added using Matplotlib's FuncAnimation. This displays the hand's velocity vector dynamically as the hand moves.
+
 ## How to Run
 
 1. **Execute the Script**:
    Run the script using Python from the command line:
 
    ```bash
-   python hand_tracking_motion_analysis.py
+   python physics.py
    ```
 2. **Interact with the Video**:
    Press any key to stop the video capture.
 
 3. **View Results**:
-   After stopping the capture, Matplotlib will display the plots showing the hand's position, velocity, and acceleration over time.
+   After stopping the capture, Matplotlib will display the plots showing the hand's position, velocity, and acceleration over time and the script includes an animation that shows the velocity vector of the hand      in real-time. This visualization helps in understanding the motion dynamics more intuitively.
 

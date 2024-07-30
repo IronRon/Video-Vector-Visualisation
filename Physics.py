@@ -93,7 +93,9 @@ if hand_centers_length > 1:
     plt.show()
 
     # Calculate vectors
-    vectors = np.diff(hand_centers, axis=0)
+    delta_t = 1 / fps
+    displacements = np.diff(hand_centers, axis=0)
+    velocities = displacements / delta_t
 
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
@@ -116,6 +118,6 @@ if hand_centers_length > 1:
         return quiver,
 
     # Creating animation
-    ani = FuncAnimation(fig, update, frames=len(vectors), interval=100, blit=True)
+    ani = FuncAnimation(fig, update, frames=len(velocities), interval=100, blit=True)
 
     plt.show()

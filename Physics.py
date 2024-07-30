@@ -91,12 +91,14 @@ if hand_centers_length > 1:
     plt.tight_layout()
     plt.show()
 
-    # Calculate vectors
-    vectors = np.diff(hand_centers, axis=0)
+    # Calculate the time interval between frames
+    delta_t = 1 / fps
+    displacements = np.diff(hand_centers, axis=0)
+    velocities = displacements / delta_t
 
     fig, ax = plt.subplots()
-    ax.set_xlim(-50, 50)
-    ax.set_ylim(-50, 50)
+    ax.set_xlim(-100, 100)
+    ax.set_ylim(-100, 100)
     ax.axhline(0, color='yellow', lw=1)
     ax.axvline(0, color='yellow', lw=1)
 
@@ -108,6 +110,9 @@ if hand_centers_length > 1:
         return quiver,
 
     # Creating animation
-    ani = FuncAnimation(fig, update, frames=hand_centers_length - 1, interval=50, blit=True)
+    ani = FuncAnimation(fig, update, frames=hand_centers_length - 1, interval=100, blit=True)
+
+    ax.set_xlabel('X Velocity (pixels/s)')
+    ax.set_ylabel('Y Velocity (pixels/s)')
 
     plt.show()
